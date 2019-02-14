@@ -1,0 +1,21 @@
+Configutation:
+  name: DefaultLogConfiguration
+
+  Appenders:
+    Console:
+      name: StdoutAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{HH:mm:ss XXX} %-5p %c.java:%L - %m%n"
+    File:
+      name: FileAppender
+      fileName: "logs/tests.log"
+      PatternLayout:
+        pattern: "%d{HH:mm:ss} %-5p %c{1.}.java:%L - %m%n"
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: "StdoutAppender"
+#        - ref: "FileAppender"

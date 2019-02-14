@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TEST_SUITE" verbose="1" >
+
+    <listeners>
+
+    </listeners>
+
+    <test name="Smoke" annotations="Дымовые">
+        <groups>
+            <define name="Smoke"/>
+        </groups>
+        <classes>
+            <class name="ru.performancelab.tests.suites.Smoke.Smoke" />
+        </classes>
+    </test>
+
+</suite>
