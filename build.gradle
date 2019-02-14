@@ -1,16 +1,124 @@
-plugins {
-    id 'java'
-}
-
-group 'ru'
+group 'ru.performancelab'
 version '1.0'
 
-sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.qameta.allure'
+
+    defaultTasks "clean", "test"
+
+    sourceCompatibility = JavaVersion.VERSION_11
+
+    // The encoding of the source - UTF-8
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 }
 
+
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.7.0"
+    }
+
+}
+
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+
+    // For TestNG Snapshots
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
+
+configurations {
+    agent
+}
+
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // TestNG
+    testImplementation 'org.testng:testng:6.14.3'
+
+    // Selenide
+    testCompile "com.codeborne:selenide:5.1.0"
+
+    // Log4j2
+    testImplementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
+    testImplementation 'org.apache.logging.log4j:log4j-core:2.11.1'
+    testImplementation 'org.apache.logging.log4j:log4j-jul:2.11.1'
+    testImplementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-gradle:2.7.0'
+    testImplementation 'io.qameta.allure:allure-testng:2.9.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.9.0'
+
+    // AspectJ
+    agent 'org.aspectj:aspectjweaver:1.9.2'
+    testImplementation 'org.aspectj:aspectjweaver:1.9.2'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
+
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-core:4.2.2'
+    testImplementation 'io.cucumber:cucumber-java:4.2.2'
+    testImplementation 'io.cucumber:cucumber-testng:4.2.2'
+    testImplementation 'io.cucumber:gherkin:6.0.14'
+    testImplementation 'io.qameta.allure:allure-cucumber4-jvm:2.9.0'
+
+    // REST-assured
+    testImplementation 'io.rest-assured:rest-assured:3.3.0'
+    testImplementation 'org.awaitility:awaitility:3.1.6'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.9.0'
+}
+
+
+// Ignore Gradle warning "Detecting annotation processors on the compile classpath has been deprecated... "
+compileTestJava {
+    options.compilerArgs += ["-proc:none"]
+}
+
+
+test {
+
+    useTestNG()
+
+    // Always run tests even if nothing has changed
+    dependsOn 'clean'
+
+    // Show "PASSED", "SKIPPED", "FAILED" test results in console
+    testLogging { events "passed", "skipped", "failed" }
+
+    options.suites 'src/test/resources/testng.xml'
+
+    return void
+}
+
+
+tasks.withType(Test) {
+
+    reports.html.enabled = false
+
+    // Variables from "gradle.properties"
+//    systemProperty "productionFlag", "$productionFlag"
+
+
+}
+
+
+allure {
+    version = '2.9.0'
+    autoconfigure = true
+    aspectjweaver = true
 }
