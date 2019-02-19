@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "io.qameta.allure:allure-gradle:2.7.0"
+        classpath 'io.qameta.allure:allure-gradle:2.7.0'
     }
 
 }
@@ -41,7 +41,6 @@ dependencies {
 
     // Log4j2
     testImplementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
-//    testImplementation 'org.apache.logging.log4j:log4j-core:2.11.1'
     testImplementation 'org.apache.logging.log4j:log4j-jul:2.11.1'
     testImplementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
@@ -49,6 +48,14 @@ dependencies {
     // Cucumber
     testImplementation 'io.cucumber:cucumber-java:4.2.3'
     testImplementation 'io.cucumber:cucumber-testng:4.2.3'
+    
+    // Allure
+    testImplementation 'io.qameta.allure:allure-gradle:2.7.0'
+    testImplementation 'io.qameta.allure:allure-testng:2.9.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.9.0'
+
+//    agent 'org.aspectj:aspectjweaver:1.9.2'
+    testImplementation 'org.aspectj:aspectjweaver:1.9.2'
 
 }
 
@@ -60,28 +67,26 @@ compileTestJava {
 
 
 test {
-
     useTestNG()
-
-    // Always run tests even if nothing has changed
-    dependsOn 'clean'
+    dependsOn 'clean'       // Always run tests even if nothing has changed
+    options.suites 'src/test/resources/testng.xml'
 
     // Show "PASSED", "SKIPPED", "FAILED" test results in console
     testLogging { events "passed", "skipped", "failed" }
-
-    options.suites 'src/test/resources/testng.xml'
-
-    return void
 }
 
 
 tasks.withType(Test) {
-
-    // Disable HTML report
-    reports.html.enabled = false
+    reports.html.enabled = false        // Disable HTML report
 
     // Variables from "gradle.properties"
     systemProperty "productionFlag", "$productionFlag"
     systemProperty "testUrl", "$testUrl"
+}
+
+allure {
+    version = '2.9.0'
+    aspectjweaver = true
+    autoconfigure = true
 }
 
