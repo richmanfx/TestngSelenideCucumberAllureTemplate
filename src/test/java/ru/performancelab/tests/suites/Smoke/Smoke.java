@@ -4,7 +4,6 @@ package ru.performancelab.tests.suites.Smoke;
 import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.Пусть;
 import cucumber.api.java.ru.Тогда;
-import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import com.codeborne.selenide.Condition;
@@ -24,9 +23,10 @@ public class Smoke extends BaseTest {
         // Сообщение текстовое в Аллюре отчёт
         allureMessage("Текстовое сообщение в отчёт");
 
-        // Скриншот в Аллюре    TODO: Пока не реализовано
-        String screenshotFileName = "selenide_screenshot";
-        screenshot(screenshotFileName);
+        allureLog("Второе сообщение в отчёт");
+
+        // Скриншот в Аллюре
+        allureScreenshot("Стартовая страница");
     }
 
     @Step("Шаг - Метод 'mustBeElementWithTheTagH'")
