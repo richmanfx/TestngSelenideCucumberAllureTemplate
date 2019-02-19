@@ -5,13 +5,9 @@ version '1.0'
 allprojects {
     apply plugin: 'java'
     apply plugin: 'io.qameta.allure'
-
-    defaultTasks "clean", "test"
-
     sourceCompatibility = JavaVersion.VERSION_11
-
-    // The encoding of the source - UTF-8
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+    defaultTasks 'test'
 }
 
 
@@ -32,16 +28,6 @@ repositories {
     jcenter()
     mavenLocal()
     mavenCentral()
-
-    // For TestNG Snapshots
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-}
-
-
-configurations {
-    agent
 }
 
 
@@ -55,30 +41,15 @@ dependencies {
 
     // Log4j2
     testImplementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
-    testImplementation 'org.apache.logging.log4j:log4j-core:2.11.1'
+//    testImplementation 'org.apache.logging.log4j:log4j-core:2.11.1'
     testImplementation 'org.apache.logging.log4j:log4j-jul:2.11.1'
     testImplementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
 
-    // Allure
-    testImplementation 'io.qameta.allure:allure-gradle:2.7.0'
-    testImplementation 'io.qameta.allure:allure-testng:2.9.0'
-    testImplementation 'io.qameta.allure:allure-selenide:2.9.0'
-
-    // AspectJ
-    agent 'org.aspectj:aspectjweaver:1.9.2'
-    testImplementation 'org.aspectj:aspectjweaver:1.9.2'
-    testImplementation 'org.assertj:assertj-core:3.11.1'
-
     // Cucumber
     testImplementation 'io.cucumber:cucumber-java:4.2.3'
     testImplementation 'io.cucumber:cucumber-testng:4.2.3'
-    testImplementation 'io.qameta.allure:allure-cucumber4-jvm:2.9.0'
 
-    // REST-assured
-    testImplementation 'io.rest-assured:rest-assured:3.3.0'
-    testImplementation 'org.awaitility:awaitility:3.1.6'
-    testImplementation 'io.qameta.allure:allure-rest-assured:2.9.0'
 }
 
 
@@ -106,17 +77,11 @@ test {
 
 tasks.withType(Test) {
 
+    // Disable HTML report
     reports.html.enabled = false
 
     // Variables from "gradle.properties"
-//    systemProperty "productionFlag", "$productionFlag"
-
-
+    systemProperty "productionFlag", "$productionFlag"
+    systemProperty "testUrl", "$testUrl"
 }
 
-
-allure {
-    version = '2.9.0'
-    autoconfigure = true
-    aspectjweaver = true
-}

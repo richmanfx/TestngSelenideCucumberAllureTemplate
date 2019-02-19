@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CUCUMBER_SUITE" verbose="1" >
+
+    <test name="CucumberTests" annotations="CucumberTests">
+        <classes>
+            <class name="ru.performancelab.tests.CucumberRunner" />
+        </classes>
+    </test>
+
+</suite>
