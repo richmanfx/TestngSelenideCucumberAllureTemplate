@@ -51,8 +51,8 @@ dependencies {
     
     // Allure
     testImplementation 'io.qameta.allure:allure-gradle:2.7.0'
-    testImplementation 'io.qameta.allure:allure-testng:2.9.0'
-    testImplementation 'io.qameta.allure:allure-selenide:2.9.0'
+    testImplementation 'io.qameta.allure:allure-testng:2.10.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.10.0'
 
 //    agent 'org.aspectj:aspectjweaver:1.9.2'
     testImplementation 'org.aspectj:aspectjweaver:1.9.2'
@@ -84,9 +84,11 @@ tasks.withType(Test) {
     systemProperty "testUrl", "$testUrl"
 }
 
+
 allure {
-    version = '2.9.0'
+    version = '2.10.0'
     aspectjweaver = true
     autoconfigure = true
+    
 }
 

@@ -16,19 +16,20 @@ import ru.performancelab.tests.BaseTest;
 public class Smoke extends BaseTest {
 
     @Step("Шаг - Метод 'openHost'")
-    @Description("Описание метода 'openHost'")
     @Пусть("открыт сайт")
     public void openHost() {
         open(System.getProperty("testUrl"));
         log.info("Сайт удачно открыт");
 
-        // Скриншот в Аллюре
+        // Сообщение текстовое в Аллюре отчёт
+        allureMessage("Текстовое сообщение в отчёт");
+
+        // Скриншот в Аллюре    TODO: Пока не реализовано
         String screenshotFileName = "selenide_screenshot";
         screenshot(screenshotFileName);
     }
 
     @Step("Шаг - Метод 'mustBeElementWithTheTagH'")
-    @Description("Описание метода 'mustBeElementWithTheTagH'")
     @Тогда("должен быть элемент с тегом H{int}")
     public void mustBeElementWithTheTagH(int arg0) {
         $(By.xpath(String.format("//H%s", arg0))).shouldBe(Condition.visible);
@@ -36,7 +37,6 @@ public class Smoke extends BaseTest {
     }
 
     @Step("Шаг - Метод 'textTagHElementMustBeSpecifiedString'")
-    @Description("Описание метода 'textTagHElementMustBeSpecifiedString'")
     @И("текст элемента с тегом H{int} должен содержать {string}")
     public void textTagHElementMustBeSpecifiedString(int arg0, String arg1) {
         $(By.xpath(String.format("//H%s[contains(string(),'%s')]", arg0, arg1))).shouldBe(Condition.visible);
