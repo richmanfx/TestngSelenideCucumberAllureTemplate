@@ -3,6 +3,10 @@
 
 <suite name="CUCUMBER_SUITE" verbose="1" >
 
+    <listeners>
+        <listener class-name="ru.performancelab.utils.ScreenShotOnFailListener" />
+    </listeners>
+
     <test name="CucumberTests" annotations="CucumberTests">
         <classes>
             <class name="ru.performancelab.tests.CucumberRunner" />

@@ -1,15 +1,20 @@
 package ru.performancelab.tests;
 
+
 import io.qameta.allure.Step;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.Listeners;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.annotations.BeforeMethod;
 import com.codeborne.selenide.WebDriverRunner;
 
+import ru.performancelab.utils.ScreenShotOnFailListener;
 
+
+@Listeners({ScreenShotOnFailListener.class})
 public class BaseTest{
 
     protected static final Logger log = LogManager.getLogger();
@@ -65,7 +70,7 @@ public class BaseTest{
      * Вернуть скриншот в виде byte-массива
      * @return Изображение в виде byte-массива
      */
-    protected byte[] screenshot() {
+    private byte[] screenshot() {
         byte[] image = new byte[0];
         try {
             image = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);

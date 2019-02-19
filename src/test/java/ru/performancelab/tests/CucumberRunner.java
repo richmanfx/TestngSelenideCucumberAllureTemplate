@@ -8,7 +8,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 
 @Test(groups = "cucumber")
-@CucumberOptions(features = {"src/test/resources/features"})
+@CucumberOptions(features = {"src/test/resources/features"}, glue = {"ru/performancelab/tests"})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
 
     // Для параллельного выполнения сценариев

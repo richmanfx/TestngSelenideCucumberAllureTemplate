@@ -89,6 +89,6 @@ allure {
     version = '2.10.0'
     aspectjweaver = true
     autoconfigure = true
-    
+    clean = true        // --clean option for the Allure commandline tool
 }
 
